@@ -5,7 +5,7 @@ app = Flask(__name__)
 # Hardcoded data
 projects = [
     {
-        "projectName": "FM_SN1_Planning_PRJ2",
+        "projectName": "P1",
         "createdDate": "2010-10-27",
         "projectId": "FM_SN1_Planning_PRJ2",
         "manager": "snadmin, snadmin",
@@ -14,7 +14,7 @@ projects = [
         "budget": 0.2
     },
     {
-        "projectName": "FM_SN1_Planning_PRJ3",
+        "projectName": "P2",
         "createdDate": "2010-10-27",
         "projectId": "FM_SN1_Planning_PRJ3",
         "manager": "snadmin, snadmin",
@@ -23,7 +23,7 @@ projects = [
         "budget": 2
     },
     {
-        "projectName": "FM_SN1_Planning_PRJ5",
+        "projectName": "P3",
         "createdDate": "2011-06-01",
         "projectId": "FM_SN1_Planning_PRJ5",
         "manager": "snadmin, snadmin",
@@ -32,7 +32,7 @@ projects = [
         "budget": 0.2
     },
     {
-        "projectName": "deepak002",
+        "projectName": "P4",
         "createdDate": "2023-07-03",
         "projectId": "20448",
         "manager": "Amos, Cheryl",
@@ -41,7 +41,7 @@ projects = [
         "budget": 0.365136
     },
     {
-        "projectName": "Infrastructure Deployment Template",
+        "projectName": "P5",
         "createdDate": "2013-07-04",
         "projectId": "csk.infrastructure",
         "manager": "Martin, Paul",
@@ -55,7 +55,7 @@ projects = [
 tasks = [
     {
         "taskId": 1,
-        "projectId": "PR1037",
+        "projectId": "P1",
         "status": "Completed",
         "owner": "Joe",
         "description": "Random task 1",
@@ -64,7 +64,7 @@ tasks = [
     },
     {
         "taskId": 2,
-        "projectId": "PR1024",
+        "projectId": "P2",
         "status": "Started",
         "owner": "Jenny",
         "description": "Random task 2",
@@ -73,7 +73,7 @@ tasks = [
     },
     {
         "taskId": 3,
-        "projectId": "PR1013",
+        "projectId": "P3",
         "status": "Not Started",
         "owner": "Sam",
         "description": "Random task 3",
@@ -82,7 +82,7 @@ tasks = [
     },
     {
         "taskId": 4,
-        "projectId": "PR1002",
+        "projectId": "P4",
         "status": "Blocked",
         "owner": "Alex",
         "description": "Random task 4",
@@ -91,7 +91,7 @@ tasks = [
     },
     {
         "taskId": 5,
-        "projectId": "PR1006",
+        "projectId": "P5",
         "status": "Completed",
         "owner": "Taylor",
         "description": "Random task 5",
@@ -100,7 +100,7 @@ tasks = [
     },
     {
         "taskId": 6,
-        "projectId": "PR1011",
+        "projectId": "P6",
         "status": "Started",
         "owner": "Joe",
         "description": "Random task 6",
@@ -109,7 +109,7 @@ tasks = [
     },
     {
         "taskId": 7,
-        "projectId": "PR1026",
+        "projectId": "P1",
         "status": "Not Started",
         "owner": "Jenny",
         "description": "Random task 7",
@@ -118,7 +118,7 @@ tasks = [
     },
     {
         "taskId": 8,
-        "projectId": "PR1005",
+        "projectId": "P2",
         "status": "Completed",
         "owner": "Sam",
         "description": "Random task 8",
@@ -127,7 +127,7 @@ tasks = [
     },
     {
         "taskId": 9,
-        "projectId": "PR1016",
+        "projectId": "P2",
         "status": "Blocked",
         "owner": "Alex",
         "description": "Random task 9",
@@ -147,7 +147,13 @@ tasks = [
 
 @app.route('/projects', methods=['GET'])
 def get_projects():
-    return jsonify(projects)
+    filters = request.args
+    filtered_projects = projects
+
+    for key, value in filters.items():
+        filtered_projects = [project for project in filtered_projects if str(project.get(key)) == value]
+
+    return jsonify(filtered_projects)
 
 @app.route('/projects', methods=['POST'])
 def create_project():
