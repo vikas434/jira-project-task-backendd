@@ -1,0 +1,4 @@
+datetime
+elasticsearch
+opensearchpy
+requests
